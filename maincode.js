@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fungalCards = [
     { name: "Waning Star", chance: 2, image: "waning.png" },
     { name: "Fungus Eye", chance: 1, image: "fungus.png" },
-    { name: "Inverted Spiral", chance: 1, image: "inverted.png" },
+    { name: "Inverted Spiral", chance: 1, image: "spiral.png" },
     { name: "Clan Eye", chance: 0.1, image: "clan.png" }
   ];
 
@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const usedCodes = new Set();
   let fungalightActiveUntil = null;
+  let clanEyeNextPack = false;
 
   const openBtn = document.getElementById("openBtn");
   const codeBtn = document.getElementById("codeBtn");
@@ -66,6 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
       overlay.classList.add("hidden");
       const pack = [];
 
+      if (clanEyeNextPack) {
+        pack.push({ name: "Clan Eye", image: "clan.png" });
+        clanEyeNextPack = false;
+      }
+
       for (let i = 0; i < 7; i++) {
         const card = rollGradient();
         if (card.name === "Clan Eye") hasClanEye = true;
@@ -101,6 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
         usedCodes.add(code);
         alert("Fungalight activated: 2% Waning Star, 1% Fungus Eye & Inverted Spiral, 0.1% Clan Eye for 10 minutes.");
         break;
+      case "eyesofaclashroyalegrinderwillberedlol":
+        clanEyeNextPack = true;
+        usedCodes.add(code);
+        alert("Next pack will contain a guaranteed Clan Eye.");
+        break;
       default:
         alert("Invalid code.");
         return;
@@ -109,3 +120,4 @@ document.addEventListener("DOMContentLoaded", () => {
     codeInput.value = "";
   }
 });
+
