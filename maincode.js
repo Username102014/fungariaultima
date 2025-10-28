@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const fungalCards = [
     { name: "Waning Star", chance: 2, image: "waning.png" },
     { name: "Fungus Eye", chance: 1, image: "fungus.png" },
-    { name: "Inverted Spiral", chance: 1, image: "spiral.png" },
+    { name: "Inverted Spiral", chance: 1, image: "inverted.png" },
     { name: "Clan Eye", chance: 0.1, image: "clan.png" }
   ];
 
