@@ -6,8 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Sunflower", image: "sunflower.png" },
     { name: "Fungus Eye", image: "fungus.png" },
     { name: "Inverted Spiral", image: "spiral.png" },
-    { name: "Waning Star", image: "waning.png" },
-    // Add more if needed
+    { name: "Waning Star", image: "waning.png" }
   ];
 
   const craftables = [
@@ -33,17 +32,28 @@ document.addEventListener("DOMContentLoaded", () => {
   let autosellEnabled = false;
 
   const openBtn = document.getElementById("openBtn");
-  const craftBtn = document.getElementById("craftBtn");
-  const craftPanel = document.getElementById("craftPanel");
+  const codeBtn = document.getElementById("codeBtn");
+  const codeInput = document.getElementById("codeInput");
+  const inventoryBtn = document.getElementById("inventoryBtn");
   const inventoryPanel = document.getElementById("inventoryPanel");
+  const inventoryCards = document.getElementById("inventoryCards");
   const autosellToggle = document.getElementById("autosellToggle");
+  const craftIcon = document.getElementById("craftIcon");
+  const craftPanel = document.getElementById("craftPanel");
+
+  const craftList = document.getElementById("craftList");
+  const craftName = document.getElementById("craftName");
+  const craftImage = document.getElementById("craftImage");
+  const craftReqs = document.getElementById("craftReqs");
 
   openBtn.onclick = openPack;
-  craftBtn.onclick = () => craftPanel.classList.toggle("hidden");
+  codeBtn.onclick = applyCode;
+  inventoryBtn.onclick = () => inventoryPanel.classList.toggle("hidden");
   autosellToggle.onclick = () => {
     autosellEnabled = !autosellEnabled;
     autosellToggle.textContent = autosellEnabled ? "Autosell: ON" : "Autosell: OFF";
   };
+  craftIcon.onclick = () => craftPanel.classList.toggle("hidden");
 
   function openPack() {
     const pack = [];
@@ -61,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateInventory() {
-    inventoryPanel.innerHTML = "";
+    inventoryCards.innerHTML = "";
     inventory.forEach((card, index) => {
       const div = document.createElement("div");
       div.className = "card";
@@ -73,28 +83,23 @@ document.addEventListener("DOMContentLoaded", () => {
         updateInventory();
       };
       div.appendChild(sellBtn);
-      inventoryPanel.appendChild(div);
+      inventoryCards.appendChild(div);
     });
   }
 
   function renderCraftPanel() {
-    const left = document.getElementById("craftList");
-    const rightName = document.getElementById("craftName");
-    const rightImage = document.getElementById("craftImage");
-    const rightReqs = document.getElementById("craftReqs");
-
-    left.innerHTML = "";
+    craftList.innerHTML = "";
     craftables.forEach(craft => {
       const btn = document.createElement("button");
       btn.textContent = craft.name;
       btn.onclick = () => {
-        rightName.textContent = craft.name;
-        rightImage.src = craft.image;
-        rightReqs.innerHTML = "";
+        craftName.textContent = craft.name;
+        craftImage.src = craft.image;
+        craftReqs.innerHTML = "";
         craft.requires.forEach(req => {
           const item = document.createElement("li");
           item.textContent = req;
-          rightReqs.appendChild(item);
+          craftReqs.appendChild(item);
         });
 
         const canCraft = craft.requires.every(req =>
@@ -113,13 +118,17 @@ document.addEventListener("DOMContentLoaded", () => {
           updateInventory();
         };
 
-        rightReqs.appendChild(craftBtn);
+        craftReqs.appendChild(craftBtn);
       };
-      left.appendChild(btn);
+      craftList.appendChild(btn);
     });
   }
 
   renderCraftPanel();
+
+  function applyCode() {
+    const code = codeInput.value.trim().toLowerCase();
+    alert("Code system not implemented in this version.");
+    codeInput.value = "";
+  }
 });
-
-
