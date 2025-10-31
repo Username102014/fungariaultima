@@ -10,7 +10,7 @@
   <h1>🌿 Gradient Pack Opener</h1>
 
   <button id="openBtn">Open Pack</button>
-  <button id="inventoryBtn">Inventory</button>
+  <button id="inventoryBtn">Toggle Inventory</button>
   <button id="autosellToggle">Autosell: OFF</button>
 
   <div id="codeBar">
@@ -18,21 +18,17 @@
     <button id="codeBtn">Apply Code</button>
   </div>
 
-  <!-- Craft Machine Icon -->
   <img src="craft.png" id="craftIcon" alt="Craft Machine" />
 
-  <!-- Pack Opening Overlay -->
   <div id="ripOverlay" class="rip-overlay hidden">
     <div class="rip-text">🛍️ Ripping pack...</div>
   </div>
 
-  <!-- Inventory Panel -->
-  <div id="inventoryPanel" class="wrapper hidden">
+  <div id="inventoryPanel" class="hidden">
     <h2>🎒 Inventory (Max 30 cards)</h2>
     <div id="inventoryCards" class="wrapper"></div>
   </div>
 
-  <!-- Crafting Panel -->
   <div id="craftPanel" class="hidden">
     <h2>🧪 Crafting Station</h2>
     <div style="display: flex; height: 400px; border: 1px solid #ccc; margin-top: 10px;">
@@ -57,5 +53,6 @@
   <script src="maincode.js"></script>
 </body>
 </html>
+
 
 
