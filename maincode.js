@@ -1,110 +1,125 @@
 document.addEventListener("DOMContentLoaded", () => {
   const gradients = [
-    { name: "Tropical Mist", image: "mist.png" },
-    { name: "Exo Shine", image: "exo.png" },
-    { name: "Cotton Candy", image: "candy.png" },
-    { name: "Sunflower", image: "sunflower.png" },
-    { name: "Fungus Eye", image: "fungus.png" },
-    { name: "Inverted Spiral", image: "spiral.png" },
-    { name: "Waning Star", image: "waning.png" }
+    { name: "Exo Shine", chance: 1.4, image: "exo.png" },
+    { name: "Frosty Fih", chance: 6.7, image: "fih.png" },
+    { name: "Eye of Rah", chance: 4.1, image: "rah.png" },
+    { name: "Isa", chance: 1.3, image: "isa.png" },
+    { name: "Demonic Wrath", chance: 4.5, image: "demon.png" },
+    { name: "Tropical Mist", chance: 4, image: "mist.png" },
+    { name: "Frost Tides", chance: 5, image: "tides.png" },
+    { name: "Popsicle", chance: 6, image: "pop.png" },
+    { name: "Lemon Lime", chance: 7, image: "lime.png" },
+    { name: "Velvet Sea", chance: 5, image: "velvet.png" },
+    { name: "Cotton Candy", chance: 7, image: "candy.png" },
+    { name: "Frosted Beam", chance: 15, image: "beam.png" },
+    { name: "Sunflower", chance: 20, image: "sunflower.png" }
   ];
 
-  const craftables = [
-    {
-      name: "Tropical Shine",
-      image: "troshine.png",
-      requires: ["Tropical Mist", "Exo Shine"]
-    },
-    {
-      name: "Clan Eye",
-      image: "clan.png",
-      requires: ["Fungus Eye", "Inverted Spiral", "Waning Star"]
-    },
-    {
-      name: "Candy Petal",
-      image: "petal.png",
-      requires: ["Cotton Candy", "Sunflower"]
-    }
+  const fungalCards = [
+    { name: "Waning Star", chance: 2, image: "waning.png" },
+    { name: "Fungus Eye", chance: 1, image: "fungus.png" },
+    { name: "Inverted Spiral", chance: 1, image: "spiral.png" },
+    { name: "Clan Eye", chance: 0.1, image: "clan.png" }
   ];
 
-  let inventory = [];
-  const maxInventory = 30;
-  let autosellEnabled = false;
+  let totalPacksOpened = 0;
+  let revealedCards = [];
+  let hasClanEye = false;
+
+  const usedCodes = new Set();
+  let fungalightActiveUntil = null;
+  let clanEyeNextPack = false;
 
   const openBtn = document.getElementById("openBtn");
   const codeBtn = document.getElementById("codeBtn");
   const codeInput = document.getElementById("codeInput");
-  const inventoryBtn = document.getElementById("inventoryBtn");
-  const inventoryPanel = document.getElementById("inventoryPanel");
-  const inventoryCards = document.getElementById("inventoryCards");
-  const autosellToggle = document.getElementById("autosellToggle");
-  const craftIcon = document.getElementById("craftIcon");
-  const craftPanel = document.getElementById("craftPanel");
-  const ripOverlay = document.getElementById("ripOverlay");
-
-  const craftList = document.getElementById("craftList");
-  const craftName = document.getElementById("craftName");
-  const craftImage = document.getElementById("craftImage");
-  const craftReqs = document.getElementById("craftReqs");
+  const overlay = document.getElementById("ripOverlay");
+  const wrapper = document.getElementById("packWrapper");
 
   openBtn.onclick = openPack;
   codeBtn.onclick = applyCode;
-  inventoryBtn.onclick = () => inventoryPanel.classList.toggle("hidden");
-  autosellToggle.onclick = () => {
-    autosellEnabled = !autosellEnabled;
-    autosellToggle.textContent = autosellEnabled ? "Autosell: ON" : "Autosell: OFF";
-  };
-  craftIcon.onclick = () => craftPanel.classList.toggle("hidden");
+
+  function rollGradient() {
+    let pool = [...gradients];
+
+    if (fungalightActiveUntil && Date.now() < fungalightActiveUntil) {
+      pool = pool.concat(fungalCards);
+    }
+
+    const totalChance = pool.reduce((sum, g) => sum + g.chance, 0);
+    const rand = Math.random() * totalChance;
+    let cumulative = 0;
+    for (let g of pool) {
+      cumulative += g.chance;
+      if (rand < cumulative) return g;
+    }
+    return pool[0];
+  }
 
   function openPack() {
-    ripOverlay.classList.remove("hidden");
+    totalPacksOpened++;
+    overlay.classList.remove("hidden");
+    wrapper.innerHTML = "";
+    wrapper.classList.add("hidden");
+    revealedCards = [];
 
     setTimeout(() => {
-      ripOverlay.classList.add("hidden");
-
+      overlay.classList.add("hidden");
       const pack = [];
-      for (let i = 0; i < 5; i++) {
-        const card = gradients[Math.floor(Math.random() * gradients.length)];
+
+      if (clanEyeNextPack) {
+        pack.push({ name: "Clan Eye", image: "clan.png" });
+        clanEyeNextPack = false;
+      }
+
+      for (let i = 0; i < 7; i++) {
+        const card = rollGradient();
+        if (card.name === "Clan Eye") hasClanEye = true;
         pack.push(card);
       }
 
-      pack.forEach(card => {
-        if (autosellEnabled && inventory.some(c => c.name === card.name)) return;
-        if (inventory.length < maxInventory) inventory.push(card);
-      });
-
-      updateInventory();
+      revealedCards = pack;
+      displayFullPack();
     }, 2000);
   }
 
-  function updateInventory() {
-    inventoryCards.innerHTML = "";
-    inventory.forEach((card, index) => {
+  function displayFullPack() {
+    wrapper.classList.remove("hidden");
+    revealedCards.forEach(card => {
       const div = document.createElement("div");
       div.className = "card";
-      div.innerHTML = `<img src="${card.image}" alt="${card.name}" /><p>${card.name}</p>`;
-      const sellBtn = document.createElement("button");
-      sellBtn.textContent = "Sell";
-      sellBtn.onclick = () => {
-        inventory.splice(index, 1);
-        updateInventory();
-      };
-      div.appendChild(sellBtn);
-      inventoryCards.appendChild(div);
+      div.innerHTML = `<img src="${card.image}" alt="${card.name}" />`;
+      wrapper.appendChild(div);
     });
   }
 
-  function renderCraftPanel() {
-    craftList.innerHTML = "";
-    craftables.forEach(craft => {
-      const btn = document.createElement("button");
-      btn.textContent = craft.name;
-      btn.onclick = () => {
-        craftName.textContent = craft.name;
-        craftImage.src = craft.image;
-        craftReqs.innerHTML = "";
-        craft.requires.forEach(req => {
-          const item = document.createElement("li");
-         
+  function applyCode() {
+    const code = codeInput.value.trim().toLowerCase();
+
+    if (usedCodes.has(code)) {
+      alert("Code already used.");
+      return;
+    }
+
+    switch (code) {
+      case "fungalight":
+        fungalightActiveUntil = Date.now() + 10 * 60 * 1000;
+        usedCodes.add(code);
+        alert("Fungalight activated: 2% Waning Star, 1% Fungus Eye & Inverted Spiral, 0.1% Clan Eye for 10 minutes.");
+        break;
+      case "eyesofaclashroyalegrinderwillberedlol":
+        clanEyeNextPack = true;
+        usedCodes.add(code);
+        alert("Next pack will contain a guaranteed Clan Eye.");
+        break;
+      default:
+        alert("Invalid code.");
+        return;
+    }
+
+    codeInput.value = "";
+  }
+});
+
 
 
