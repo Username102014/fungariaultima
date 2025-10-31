@@ -105,39 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
         craftReqs.innerHTML = "";
         craft.requires.forEach(req => {
           const item = document.createElement("li");
-          item.textContent = req;
-          craftReqs.appendChild(item);
-        });
-
-        const canCraft = craft.requires.every(req =>
-          inventory.some(card => card.name === req)
-        );
-
-        const craftBtn = document.createElement("button");
-        craftBtn.textContent = "Craft";
-        craftBtn.disabled = !canCraft;
-        craftBtn.onclick = () => {
-          craft.requires.forEach(req => {
-            const index = inventory.findIndex(card => card.name === req);
-            if (index !== -1) inventory.splice(index, 1);
-          });
-          inventory.push({ name: craft.name, image: craft.image });
-          updateInventory();
-        };
-
-        craftReqs.appendChild(craftBtn);
-      };
-      craftList.appendChild(btn);
-    });
-  }
-
-  renderCraftPanel();
-
-  function applyCode() {
-    const code = codeInput.value.trim().toLowerCase();
-    alert("Code system not implemented in this version.");
-    codeInput.value = "";
-  }
-});
+         
 
 
