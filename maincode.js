@@ -40,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const autosellToggle = document.getElementById("autosellToggle");
   const craftIcon = document.getElementById("craftIcon");
   const craftPanel = document.getElementById("craftPanel");
+  const ripOverlay = document.getElementById("ripOverlay");
 
   const craftList = document.getElementById("craftList");
   const craftName = document.getElementById("craftName");
@@ -56,18 +57,24 @@ document.addEventListener("DOMContentLoaded", () => {
   craftIcon.onclick = () => craftPanel.classList.toggle("hidden");
 
   function openPack() {
-    const pack = [];
-    for (let i = 0; i < 5; i++) {
-      const card = gradients[Math.floor(Math.random() * gradients.length)];
-      pack.push(card);
-    }
+    ripOverlay.classList.remove("hidden");
 
-    pack.forEach(card => {
-      if (autosellEnabled && inventory.some(c => c.name === card.name)) return;
-      if (inventory.length < maxInventory) inventory.push(card);
-    });
+    setTimeout(() => {
+      ripOverlay.classList.add("hidden");
 
-    updateInventory();
+      const pack = [];
+      for (let i = 0; i < 5; i++) {
+        const card = gradients[Math.floor(Math.random() * gradients.length)];
+        pack.push(card);
+      }
+
+      pack.forEach(card => {
+        if (autosellEnabled && inventory.some(c => c.name === card.name)) return;
+        if (inventory.length < maxInventory) inventory.push(card);
+      });
+
+      updateInventory();
+    }, 2000);
   }
 
   function updateInventory() {
@@ -132,4 +139,5 @@ document.addEventListener("DOMContentLoaded", () => {
     codeInput.value = "";
   }
 });
+
 
