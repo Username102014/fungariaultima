@@ -10,7 +10,7 @@
   <h1>🌿 Gradient Pack Opener</h1>
 
   <button id="openBtn">Open Pack</button>
-  <button id="craftBtn">Craft</button>
+  <button id="inventoryBtn">Inventory</button>
   <button id="autosellToggle">Autosell: OFF</button>
 
   <div id="codeBar">
@@ -18,34 +18,34 @@
     <button id="codeBtn">Apply Code</button>
   </div>
 
+  <!-- Craft Machine Icon -->
+  <img src="craft.png" id="craftIcon" alt="Craft Machine" />
+
+  <!-- Pack Opening Overlay -->
   <div id="ripOverlay" class="rip-overlay hidden">
     <div class="rip-text">🛍️ Ripping pack...</div>
   </div>
 
-  <h2>🎒 Inventory (Max 30 cards)</h2>
-  <div id="inventoryPanel" class="wrapper"></div>
+  <!-- Inventory Panel -->
+  <div id="inventoryPanel" class="wrapper hidden">
+    <h2>🎒 Inventory (Max 30 cards)</h2>
+    <div id="inventoryCards" class="wrapper"></div>
+  </div>
 
+  <!-- Crafting Panel -->
   <div id="craftPanel" class="hidden">
     <h2>🧪 Crafting Station</h2>
     <div style="display: flex; height: 400px; border: 1px solid #ccc; margin-top: 10px;">
-      <!-- Left 30%: Craftable list -->
       <div id="craftList" style="width: 30%; overflow-y: auto; border-right: 1px solid #ccc; padding: 10px;">
         <h3>Craftables</h3>
       </div>
-
-      <!-- Right 70%: Craft details -->
       <div style="width: 70%; padding: 10px;">
-        <!-- Top 30%: Name -->
         <div style="height: 30%;">
           <h3 id="craftName">Select a craft</h3>
         </div>
-
-        <!-- Middle 30%: Image -->
         <div style="height: 30%;">
           <img id="craftImage" style="height: 100px;" alt="Craft Preview" />
         </div>
-
-        <!-- Bottom 40%: Requirements -->
         <div style="height: 40%;">
           <h4>Required Cards:</h4>
           <ul id="craftReqs"></ul>
@@ -57,4 +57,5 @@
   <script src="maincode.js"></script>
 </body>
 </html>
+
 
