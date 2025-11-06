@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let hasClanEye = false;
 
   const usedCodes = new Set();
-  let fungalightActiveUntil = null;
+  let funguschungusActiveUntil = null;
   let clanEyeNextPack = false;
 
   const openBtn = document.getElementById("openBtn");
@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function rollGradient() {
     let pool = [...gradients];
 
-    if (fungalightActiveUntil && Date.now() < fungalightActiveUntil) {
+    if (funguschungusActiveUntil && Date.now() < funguschungusActiveUntil) {
       pool = pool.concat(boostedFungalCards);
     }
 
