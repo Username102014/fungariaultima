@@ -15,11 +15,18 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "Sunflower", chance: 20, image: "sunflower.png" }
   ];
 
-  const fungalCards = [
+  const baseFungalCards = [
     { name: "Waning Star", chance: 2, image: "waning.png" },
     { name: "Fungus Eye", chance: 1, image: "fungus.png" },
     { name: "Inverted Spiral", chance: 1, image: "spiral.png" },
     { name: "Clan Eye", chance: 0.1, image: "clan.png" }
+  ];
+
+  const boostedFungalCards = [
+    { name: "Waning Star", chance: 2, image: "waning.png" },
+    { name: "Fungus Eye", chance: 1, image: "fungus.png" },
+    { name: "Inverted Spiral", chance: 1, image: "spiral.png" },
+    { name: "Clan Eye", chance: 0.67, image: "clan.png" }
   ];
 
   let totalPacksOpened = 0;
@@ -43,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let pool = [...gradients];
 
     if (fungalightActiveUntil && Date.now() < fungalightActiveUntil) {
-      pool = pool.concat(fungalCards);
+      pool = pool.concat(boostedFungalCards);
     }
 
     const totalChance = pool.reduce((sum, g) => sum + g.chance, 0);
@@ -102,10 +109,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     switch (code) {
-      case "fungalight":
+      case "funguschangus":
         fungalightActiveUntil = Date.now() + 10 * 60 * 1000;
         usedCodes.add(code);
-        alert("Fungalight activated: 2% Waning Star, 1% Fungus Eye & Inverted Spiral, 0.1% Clan Eye for 10 minutes.");
+        alert("Funguschangus activated: Clan Eye chance boosted to 0.67% for 10 minutes.");
         break;
       case "eyesofaclashroyalegrinderwillberedlol":
         clanEyeNextPack = true;
@@ -120,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
     codeInput.value = "";
   }
 });
+
 
 
 
