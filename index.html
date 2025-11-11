@@ -1,57 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crafting Simulator</title>
-  <link rel="stylesheet" href="art.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Card Crafting Simulator</title>
+  <link rel="stylesheet" href="art.css">
 </head>
 <body>
-  <h1>🎨 Crafting Simulator</h1>
-
-  <button id="openBtn">Open Pack</button>
-  <button id="inventoryBtn">Toggle Inventory</button>
-  <button id="autosellToggle">Autosell: OFF</button>
-
-  <div id="codeBar">
-    <input type="text" id="codeInput" placeholder="Enter code" />
-    <button id="codeBtn">Apply Code</button>
-  </div>
-
-  <img src="craft.png" id="craftIcon" alt="Craft Machine" />
-
-  <div id="ripOverlay" class="rip-overlay hidden">
-    <div class="rip-text">🛍️ Ripping pack...</div>
-  </div>
-
-  <div id="inventoryPanel" class="hidden">
-    <h2>🎒 Inventory (Max 30 cards)</h2>
-    <div id="inventoryCards" class="wrapper"></div>
-  </div>
-
-  <div id="craftPanel" class="hidden">
-    <h2>🧪 Crafting Station</h2>
-    <div style="display: flex; height: 400px; border: 1px solid #ccc;">
-      <div id="craftList" style="width: 30%; overflow-y: auto; border-right: 1px solid #ccc; padding: 10px;">
-        <h3>Craftables</h3>
+  <div class="app">
+    <header class="header">
+      <h1>Card Crafting Simulator</h1>
+      <div class="controls">
+        <span id="credits">Credits: 0</span>
+        <label class="autosell">
+          <input type="checkbox" id="autosellToggle"> Autosell duplicates
+        </label>
+        <input id="codeInput" placeholder="Enter code" />
+        <button id="applyCode">Apply</button>
       </div>
-      <div style="width: 70%; padding: 10px;">
-        <div style="height: 30%;">
-          <h3 id="craftName">Select a craft</h3>
+    </header>
+
+    <main class="main-grid">
+      <section class="pack-area">
+        <img id="craftMachine" src="assets/craft.png" alt="Craft Machine" width="120" title="Open crafting GUI">
+        <div class="pack-controls">
+          <button id="openPack">Open Pack (5 cards)</button>
+          <div id="packResult" class="pack-result"></div>
         </div>
-        <div style="height: 30%;">
-          <img id="craftImage" style="height: 100px;" alt="Craft Preview" />
-        </div>
-        <div style="height: 40%;">
-          <h4>Required Cards:</h4>
-          <ul id="craftReqs"></ul>
+      </section>
+
+      <section class="inventory">
+        <h2>Inventory <span id="invCount">0/30</span></h2>
+        <div id="inventoryList" class="inventory-list"></div>
+      </section>
+    </main>
+
+    <div id="craftModal" class="modal hidden">
+      <div class="modal-content">
+        <button id="closeCraft" class="close">×</button>
+        <div class="craft-grid">
+          <aside class="craft-list">
+            <h3>Craftables</h3>
+            <ul id="craftables"></ul>
+          </aside>
+          <section class="craft-detail">
+            <div class="detail-top" id="craftName">Select a craft</div>
+            <div class="detail-mid" id="craftImageWrap"><img id="craftImage" src="assets/placeholder.png" alt=""></div>
+            <div class="detail-bottom">
+              <ul id="ingredientsList"></ul>
+              <button id="craftButton" disabled>Craft</button>
+            </div>
+          </section>
         </div>
       </div>
     </div>
+
+    <footer class="footer">Press <code>`</code> to open Houston ISD Canvas.</footer>
   </div>
 
   <script src="maincode.js"></script>
 </body>
 </html>
+
 
 
