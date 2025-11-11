@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const craftIcon = document.getElementById("craftIcon");
   const craftPanel = document.getElementById("craftPanel");
   const ripOverlay = document.getElementById("ripOverlay");
-
   const craftList = document.getElementById("craftList");
   const craftName = document.getElementById("craftName");
   const craftImage = document.getElementById("craftImage");
@@ -101,17 +100,4 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.textContent = craft.name;
       btn.onclick = () => {
         craftName.textContent = craft.name;
-        craftImage.src = craft.image;
-        craftReqs.innerHTML = "";
-        craft.requires.forEach(req => {
-          const item = document.createElement("li");
-          item.textContent = req;
-          craftReqs.appendChild(item);
-        });
-
-        const canCraft = craft.requires.every(req =>
-          inventory.some(card => card.name === req)
-        );
-
-        const craftBtn = document.createElement("button");
-        craftBtn
+        craftImage.src = craft.image
