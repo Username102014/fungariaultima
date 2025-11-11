@@ -1,88 +1,91 @@
+:root {
+  --bg: #f0f0f0;
+  --surface: #fff;
+  --accent: #444;
+}
+* { box-sizing: border-box; }
 body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 30px;
-  background-color: #f0f0f0;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
-
-button {
-  padding: 10px 20px;
-  margin: 5px;
-  font-size: 16px;
-  cursor: pointer;
+.app { width: 100%; max-width: 1100px; }
+.header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px;
 }
-
-#codeBar {
-  margin-top: 20px;
+.controls { display: flex; gap: 10px; align-items: center; }
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
 }
-
-#codeInput {
-  padding: 8px;
-  font-size: 16px;
-  width: 200px;
+.pack-area, .inventory {
+  background: var(--surface);
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-
-.wrapper {
+.pack-result {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 8px;
 }
-
 .card {
-  width: 100px;
-  height: 140px;
-  border-radius: 8px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.2);
-  background: white;
-  padding: 5px;
-}
-
-.card img {
-  width: 100%;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 6px;
-}
-
-.rip-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(255,255,255,0.9);
+  width: 110px;
+  height: 150px;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#fdfdfd,#e8e8e8);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  font-size: 12px;
+  text-align: center;
 }
+.inventory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+.inv-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fafafa;
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+.inv-row img { width: 60px; height: 50px; object-fit: contain; }
+.inv-row button {
+  background: #ef4444; color: #fff; border: none;
+  border-radius: 6px; padding: 6px 10px; cursor: pointer;
+}
+.modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex; justify-content: center; align-items: center;
+}
+.modal.hidden { display: none; }
+.modal-content {
+  background: var(--surface);
+  width: 90%; max-width: 900px;
+  padding: 16px;
+  border-radius: 12px;
+}
+.craft-grid { display: flex; gap: 12px; }
+.craft-list { width: 30%; border-right: 1px solid #ddd; }
+.craft-list li { cursor: pointer; padding: 6px; border-radius: 6px; }
+.craft-list li.active { background: #f3f4f6; }
+.craft-detail { width: 70%; display: flex; flex-direction: column; }
+.detail-mid { flex: 1; display: flex; justify-content: center; align-items: center; }
+.footer { text-align: center; margin-top: 20px; color: var(--accent); font-size: 13px; }
 
-.rip-text {
-  font-size: 32px;
-  font-weight: bold;
-  color: #333;
-  animation: fadeInOut 2s ease-in-out;
-}
-
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 0; transform: scale(1); }
-}
-
-.hidden {
-  display: none;
-}
-
-#craftIcon {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 120px;
-  cursor: pointer;
-}
 
 
 
