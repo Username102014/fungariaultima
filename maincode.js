@@ -104,10 +104,14 @@ document.addEventListener("DOMContentLoaded", () => {
         craftImage.src = craft.image;
         craftReqs.innerHTML = "";
         craft.requires.forEach(req => {
-          const
+          const item = document.createElement("li");
+          item.textContent = req;
+          craftReqs.appendChild(item);
+        });
 
+        const canCraft = craft.requires.every(req =>
+          inventory.some(card => card.name === req)
+        );
 
-
-
-
-
+        const craftBtn = document.createElement("button");
+        craftBtn
